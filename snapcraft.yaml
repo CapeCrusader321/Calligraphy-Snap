@@ -1,0 +1,50 @@
+name: calligraphy
+base: core22
+adopt-info: calligraphy
+grade: stable
+confinement: strict
+compression: lzo
+architectures:
+  - build-on: amd64
+  - build-on: armhf
+  - build-on: arm64
+  
+slots:
+  calligraphy:
+    interface: dbus
+    bus: session
+    name: io.gitlab.gregorni.Calligraphy
+
+environment:
+  # WORKAROUND: Add python modules in Snap to search path
+  PYTHONPATH: ${SNAP}/usr/lib/python3/dist-packages:$PYTHONPATH
+
+apps:
+  calligraphy:
+    command: usr/bin/calligraphy
+    extensions: [gnome]
+    plugs:
+      - home
+      - network
+      - network-status
+      - optical-drive
+      - removable-media
+    common-id: io.gitlab.gregorni.Calligraphy
+    desktop: usr/share/applications/io.gitlab.gregorni.Calligraphy.desktop
+    
+    
+parts:
+  calligraphy:
+    source: https://gitlab.com/gregorni/Calligraphy.git
+    plugin: meson
+    parse-info: [usr/share/metainfo/io.gitlab.gregorni.Calligraphy.desktop.appdata.xml]
+    meson-parameters:
+      - --prefix=/snap/calligraphy/current/usr
+    stage-packages:
+      - python3-pyfiglet
+    override-pull: |
+      craftctl default
+      craftctl set version=$(git describe --tags --abbrev=0)
+    organize:
+      snap/calligraphy/current/usr: usr
+    
