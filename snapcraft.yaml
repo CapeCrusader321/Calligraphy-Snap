@@ -49,6 +49,10 @@ parts:
     override-pull: |
       craftctl default
       craftctl set version=$(git describe --tags --abbrev=0)
+    override-build: |
+      craftctl default
+      # WORKAROUND: Use python from search path, the path detected by meson doesn't exist when running the Snap
+      sed -e '1c#!/usr/bin/env python3' -i ${CRAFT_PART_INSTALL}/snap/calligraphy/current/usr/bin/calligraphy  
     organize:
       snap/calligraphy/current/usr: usr
   
