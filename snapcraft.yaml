@@ -40,6 +40,10 @@ parts:
     parse-info: [usr/share/metainfo/io.gitlab.gregorni.Calligraphy.desktop.appdata.xml]
     meson-parameters:
       - --prefix=/snap/calligraphy/current/usr
+    build-packages:
+      - blueprint-compiler
+      - python3-pyfiglet
+      - build-essential
     stage-packages:
       - python3-pyfiglet
     override-pull: |
