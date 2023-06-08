@@ -36,12 +36,12 @@ apps:
 parts:
   calligraphy:
     source: https://gitlab.com/gregorni/Calligraphy.git
+    after: [blueprint]
     plugin: meson
     parse-info: [usr/share/metainfo/io.gitlab.gregorni.Calligraphy.desktop.appdata.xml]
     meson-parameters:
       - --prefix=/snap/calligraphy/current/usr
     build-packages:
-      - blueprint-compiler
       - python3-pyfiglet
       - build-essential
     stage-packages:
@@ -51,4 +51,11 @@ parts:
       craftctl set version=$(git describe --tags --abbrev=0)
     organize:
       snap/calligraphy/current/usr: usr
-    
+  
+  blueprint:
+    source: https://gitlab.gnome.org/jwestman/blueprint-compiler
+    source-tag: v0.8.1
+    plugin: meson
+    meson-parameters:
+      - --prefix=/usr
+      
