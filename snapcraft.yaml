@@ -53,7 +53,7 @@ parts:
       snap/calligraphy/current/usr: usr
   
   blueprint:
-    source: https://gitlab.gnome.org/jwestman/blueprint-compiler
+    source: https://gitlab.gnome.org/jwestman/blueprint-compiler.git
     source-tag: v0.8.1
     plugin: meson
     meson-parameters:
